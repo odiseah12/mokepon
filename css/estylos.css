@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
+*{
+    font-family:'Poor Story', cursive ;
+}
+body{
+    
+  background: url(https://fondosmil.com/fondo/3617.png);
+}
+.titulo{ 
+    color: #379237;
+    font-size: 60px;
+    
+}
+.select-mascota{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   
+   
+
+}
+.subtitulo{
+ color: #82CD47;
+ font-size: 30px;
+}
+.tarjetas ,.tarjeta-ataques{
+    display: flex;
+    gap: 10px;
+    
+   
+}
+.tarjeta-de-mokepol{
+    width: 180px;
+    height: 100px;
+    background: transparent;
+    padding: 10px;
+    box-sizing: border-box;
+    margin: 10px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #379237;
+    
+
+}
+
+.tarjeta-de-mokepol img{
+    width: 80px;
+}
+input{
+    display: none;
+}
+input:checked + label{
+    background:#379237 ;
+}
+.select{
+    width: 180px;
+    height: 50px;
+    border-radius: 15px;
+    border: 2px solid #379237;
+    background: transparent;
+    
+    font-size: 25px;
+        
+}
+.select:hover{
+    background: #379237;
+    color: aliceblue;
+}
+
+.ataque{
+    flex-direction: column;
+    align-items: center;
+
+}
+.btn{
+
+    width: 180px;
+    height: 50px;
+    border-radius: 15px;
+    border: 2px solid #379237;
+    background: transparent;
+    
+    font-size: 25px;
+}
+.btn:hover{
+    background: #379237;
+    color: aliceblue;
+}
+.mensaje{
+    width: 200px;
+    background: #82CD47;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 20px;
+    font-size: 23px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.btn-reset{
+    border: none;
+    color: red;
+}
+.ataques-ambos{
+  display: grid;
+  grid-template-columns: 100px 100px;
+
+}
+.ataques-jugador, .ataques-enemigo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (max-width: 360px){
+
+    .tarjetas , .tarjeta-ataques{
+        flex-direction: column;
+    }
+}
