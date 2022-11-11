@@ -42,23 +42,36 @@ let vidasEnemigo =3
 let lienzo = mapa.getContext("2d")
 let intervalo
 let mascotaJugadorObjeto
+let  alturaQueBuscamos
+let anchoDelMapa = window.innerWidth -20
+const anchoMaximoDelMapa = 350
+
+if (anchoDelMapa > anchoMaximoDelMapa) {
+    anchoDelMapa = anchoMaximoDelMapa -20
+    
+}
+
+alturaQueBuscamos = anchoDelMapa * 600 / 800
+
+mapa.width = anchoDelMapa
+mapa.height = alturaQueBuscamos
 
 let mapaBackground = new Image()
-mapaBackground.src = "https://img.freepik.com/vector-premium/pixel-art-naturaleza-montanas-pinos-arboles-fondo-juego-8-bits_210544-13.jpg"
+mapaBackground.src = "https://static.platzi.com/media/user_upload/mokemap-ca51ea18-7ac8-492f-be96-6181d766a99d.jpg"
 
 
 
 
 class Mokepon {
-    constructor(nombre, foto, vida, fotoMapa, x = 10, y = 10){
+    constructor(nombre, foto, vida, fotoMapa){
         this.nombre = nombre
         this.foto = foto
         this.vida = vida 
         this.ataques = []
-        this.x = x
-        this.y = y
-        this.ancho = 80
-        this.alto = 80
+        this.ancho = 30
+        this.alto = 30
+        this.x = aleatorio(0,mapa.width - this.ancho)
+        this.y = aleatorio(0,mapa.height - this.alto)
         this.mapaFoto = new Image()
         this.mapaFoto.src = fotoMapa
         this.velocidadX = 0
@@ -88,13 +101,22 @@ let ratigueya = new Mokepon("Ratigueya","https://i.pinimg.com/originals/f2/95/76
 
 
 
-let  hipogeEnemigo = new Mokepon("Hipoge","https://www.megaidea.net/wp-content/uploads/2021/08/Pokemon02-956x1024.png", 5,"https://www.megaidea.net/wp-content/uploads/2021/08/Pokemon02-956x1024.png", 80, 120)
+let  hipogeEnemigo = new Mokepon("Hipoge","https://www.megaidea.net/wp-content/uploads/2021/08/Pokemon02-956x1024.png", 5,"https://www.megaidea.net/wp-content/uploads/2021/08/Pokemon02-956x1024.png")
 
-let capipepoEnemigo = new Mokepon("Capipepo","https://imagenpng.com/wp-content/uploads/2017/02/007Squirtle_Pokem.png", 5,"https://imagenpng.com/wp-content/uploads/2017/02/007Squirtle_Pokem.png",150,95)
+let capipepoEnemigo = new Mokepon("Capipepo","https://imagenpng.com/wp-content/uploads/2017/02/007Squirtle_Pokem.png", 5,"https://imagenpng.com/wp-content/uploads/2017/02/007Squirtle_Pokem.png")
 
-let ratigueyaEnemigo = new Mokepon("Ratigueya","https://i.pinimg.com/originals/f2/95/76/f295769d9bd3c34ffc552e837f5304ae.png", 5,"https://i.pinimg.com/originals/f2/95/76/f295769d9bd3c34ffc552e837f5304ae.png" , 200,190)
+let ratigueyaEnemigo = new Mokepon("Ratigueya","", 5,"https://i.pinimg.com/originals/f2/95/76/f295769d9bd3c34ffc552e837f5304ae.png" )
 
 hipoge.ataques.push(
+    {nombre: "agua", id: "btn-agua" },
+    {nombre: "agua", id: "btn-agua" },
+    {nombre: "agua", id:"btn-agua"},
+    {nombre: "fuego", id: "btn-fuego" },
+    {nombre: "tierra", id: "btn-tierra" },
+)
+
+
+hipogeEnemigo.ataques.push(
     {nombre: "agua", id: "btn-agua" },
     {nombre: "agua", id: "btn-agua" },
     {nombre: "agua", id:"btn-agua"},
@@ -112,6 +134,16 @@ capipepo.ataques.push(
     
 )
 
+capipepoEnemigo.ataques.push(
+    {nombre: "tierra", id: "btn-tierra" },
+    {nombre: "tierra", id: "btn-tierra" },
+    {nombre: "tierra", id: "btn-tierra" },
+    {nombre: "fuego", id: "btn-fuego" },
+    {nombre: "agua", id:"btn-agua"},
+   
+    
+)
+
 ratigueya.ataques.push(
     {nombre: "fuego", id: "btn-fuego" },
     {nombre: "fuego", id: "btn-fuego" },
@@ -119,6 +151,14 @@ ratigueya.ataques.push(
     {nombre: "agua", id:"btn-agua"},
     {nombre: "tierra", id: "btn-tierra" },
 )
+ratigueyaEnemigo.ataques.push(
+    {nombre: "fuego", id: "btn-fuego" },
+    {nombre: "fuego", id: "btn-fuego" },
+    {nombre: "fuego", id: "btn-fuego" },
+    {nombre: "agua", id:"btn-agua"},
+    {nombre: "tierra", id: "btn-tierra" },
+)
+
 
 mokepones.push(hipoge,capipepo,ratigueya)
 
@@ -151,7 +191,6 @@ mokepones.push(hipoge,capipepo,ratigueya)
      function selecionDeMascotaJugador (){
      
       sectionSeleccionarMascota.style.display ="none"
-     // sectionSeleccionarAtaques.style.display ="flex"
    
       
     if (inputHipoge.checked){
@@ -174,7 +213,7 @@ mokepones.push(hipoge,capipepo,ratigueya)
         sectioVerMapa.style.display = "flex"
     
         iniciarMapa()
-        seleccionMascotaEnemigo()
+      
     }
 
     function extraerAtaques(mascotaJugador){
@@ -415,8 +454,7 @@ function moverArriba(){
   }
 
    function iniciarMapa(){
-    mapa.width = 320
-    mapa.height = 240
+   
     mascotaJugadorObjeto = obtenerObjetoMascota(mascotaJugador)
     intervalo = setInterval(pintarCanvas, 50)
 
@@ -454,6 +492,10 @@ function moverArriba(){
             return
         }
         detenerMovimiento()
-        alert("hay colision" + enemigo.nombe)
+        clearInterval(intervalo)
+     sectionSeleccionarAtaques.style.display ="flex"
+     sectioVerMapa.style.display ="none"
+     seleccionMascotaEnemigo(enemigo)
+      
     }
 window.addEventListener("load", iniciarJuego)
